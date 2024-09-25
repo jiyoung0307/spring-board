@@ -23,17 +23,14 @@ public class ArticleController {
 
     @PostMapping("/articles/create")
     public String createArticle(ArticleFormDTO articleFormDTO) {
-        /* System.out.println("articleFormDTO.toString() : " + articleFormDTO.toString()); */
         log.info(articleFormDTO.toString());
 
         /* 1. DTO를 엔티티로 변환 */
         Article article = articleFormDTO.toEntity();
-        /* System.out.println("article.toString() : " + article.toString()); */
         log.info(article.toString());
 
         /* 2. 리파지터리로 엔티티를 DB에 저장 */
         Article saved = articleRepository.save(article);
-        /* System.out.println("saved.toString() : " + saved.toString()); */
         log.info(saved.toString());
         return "";
     }
