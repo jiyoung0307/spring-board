@@ -11,17 +11,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.spring.board.repository.ArticleRepository;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-@Slf4j          // 로깅 기능을 위한 어노테이션 추가
+@Slf4j          // 로깅 기능을 위한 어노테이션 추가W
 @Controller
 public class ArticleController {
 
     @Autowired
     private ArticleRepository articleRepository;
 
+    /* Create */
     @GetMapping("/articles/new")
     public String newArticleForm() {
         return "articles/new";
@@ -42,6 +41,7 @@ public class ArticleController {
         return "redirect:/articles/" + saved.getId();
     }
 
+    /* Read */
     @GetMapping("/articles/{id}")   // 데이터 조회 요청 접수
     public String show(@PathVariable Long id, Model model) {     // 매개변수로 id 받아오기
         log.info("id : " + id);    // id를 잘 받았는지 확인하는 로그 찍기
@@ -67,4 +67,19 @@ public class ArticleController {
         /* 3. 사용자에게 보여 줄 뷰 페이지 설정하기 */
         return "articles/index";
     }
+
+    /* Update */
+    @GetMapping("/articles/{id}/edit")  // URL 요청 접수
+    public String edit(@PathVariable Long id, Model model) {  // id를 매개변수로 받아 오기
+        // DB에서 수정할 데이터 가져오기
+        Article articleEntity = articleRepository.findById(id).orElse(null);
+
+        // 모델에 데이터 등록하기
+        model.addAttribute("article", articleEntity);   // articleEntity를 article로 등록
+
+        // 뷰 페이지 설정
+        return "articles/edit";
+    }
+
+
 }
