@@ -42,8 +42,11 @@ public class ArticleApiController {
     }
 
     // PATCH
+    /* 컨트롤러의 역할 : 클라이언트 요청 받기 */
     @PatchMapping("/articles/{id}")   // URL 요청 접수
     public ResponseEntity<Article> update(@PathVariable Long id, @RequestBody ArticleFormDTO articleFormDTO) {  // 반환형 수정(Article -> ResponseEntity<Article>)
+
+        /* 서비스의 역할 : 리파지터리에 데이터 가져오도록 명령하기 */
         // 1. 수정용 엔티티 생성하기
         // 1-1. DTO -> 엔티티 변환하기
         Article article = articleFormDTO.toEntity();    // DTO를 엔티티로 변환
@@ -57,6 +60,11 @@ public class ArticleApiController {
         // 3-1. 잘못된 요청 처리하기
         if(updateTarget == null || id != article.getId()) {     // 잘못된 요청인지 판별
             log.info("잘못된 요청! id: {}, article: {}", id, article.toString());  // 로그 찍기
+
+            updateTarget.patch(article);
+            Article updated = articleRepository.save(updateTarget);
+
+            /* 컨트롤러의 역할 : 클라이언트에 응답하기 */
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);    // ResponseEntity 반환
         }
 
