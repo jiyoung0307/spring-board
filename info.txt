@@ -1,10 +1,10 @@
-ResponseEntity는 REST 컨트롤러의 반환형, REST API의 응답을 위해 사용하는 클래스
+* ResponseEntity는 REST 컨트롤러의 반환형, REST API의 응답을 위해 사용하는 클래스
 REST API 요청을 받아 응답할 떄 이 클래스에 HTTP 상태 코드, 헤더, 본문을 실어 보낼 수 있음.
 
-HttpStatus는 HTTP 상태 코드를 관리하는 클래스
+* HttpStatus는 HTTP 상태 코드를 관리하는 클래스
 다양한 Enum 타입과 관련한 메서드를 가짐.
 
-stream은 리스트와 같은 자료구조에 저장된 요소를 하나씩 순회하면서 처리하는 코드 패턴임.
+* stream은 리스트와 같은 자료구조에 저장된 요소를 하나씩 순회하면서 처리하는 코드 패턴임.
 for문으로 작성할 때보다 코드가 훨씬 간결해짐.
 
 [case 1]
@@ -31,3 +31,18 @@ for(int i = 0; i < articleList.size(); i++) {
 <stream>
     articleList.stream()
         .forEach(article -> articleRepository.save(article));
+
+* Arrays.asList()
+입력된 배열 또는 2개 이상의 동일한 타입 데이터를 정적 리스트로 만들어 반환.
+정적 리스트는 고정 크기이므로 add()나 remove()를 사용할 수 없음.
+
+String[] arr = {"Kim", "Na", "Park", "Lee"};
+List<String> fixedSizeListA = Arrays.asList(arr);
+List<String> fixedSizeListB = Arrays.asList("김", "나", "박", "이");
+
+만약, 정적 리스트에 add()나 remove()를 사용하려면 정적 리스트를 일반 리스트로 새로 만들어야 함.
+
+아래는 정적 리스트를 새 ArrayList로 만드는 예시
+List<String> list = new ArrayList<>(fixedSizeListA);
+
+테스트 코드에서도 Arrays.asList()로 합친 정적 리스트를 새 ArrayList로 만들어 expected에 저장함.

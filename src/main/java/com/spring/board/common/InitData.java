@@ -22,18 +22,18 @@ public class InitData implements ApplicationListener<ApplicationReadyEvent> {
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         List<Article> articles = new ArrayList<>();
-        articles.add(new Article(null, "가가가", "1111"));
-        articles.add(new Article(null, "나나나", "2222"));
-        articles.add(new Article(null, "다다다", "3333"));
+        articles.add(new Article(1L, "가가가가", "1111"));
+        articles.add(new Article(2L, "나나나나", "2222"));
+        articles.add(new Article(3L, "다다다다", "3333"));
 
         // 데이터베이스에 저장
         articleRepository.saveAll(articles);
 
         List<Coffee> coffee = new ArrayList<>();
-        coffee.add(new Coffee(null, "아메리카노",4100));
-        coffee.add(new Coffee(null, "라떼", 4600));
-        coffee.add(new Coffee(null, "모카", 5100));
-        coffee.add(new Coffee(null, "오늘의 커피", 3800));
+        coffee.add(new Coffee(1L, "아메리카노",4100));
+        coffee.add(new Coffee(2L, "라떼", 4600));
+        coffee.add(new Coffee(3L, "모카", 5100));
+        coffee.add(new Coffee(4L, "오늘의 커피", 3800));
 
         // 데이터베이스에 저장
         coffeeRepository.saveAll(coffee);
