@@ -1,4 +1,4 @@
-package com.spring.board.API;
+package com.spring.board.api;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -1,10 +1,15 @@
 package com.spring.board.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.spring.board.entity.Article;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+@NoArgsConstructor
 @AllArgsConstructor
+@Data
 @ToString
 public class ArticleFormDTO {
     private Long id;        // id 필드 추가
