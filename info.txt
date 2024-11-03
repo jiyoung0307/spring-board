@@ -3,3 +3,31 @@ REST API 요청을 받아 응답할 떄 이 클래스에 HTTP 상태 코드, 헤
 
 HttpStatus는 HTTP 상태 코드를 관리하는 클래스
 다양한 Enum 타입과 관련한 메서드를 가짐.
+
+stream은 리스트와 같은 자료구조에 저장된 요소를 하나씩 순회하면서 처리하는 코드 패턴임.
+for문으로 작성할 때보다 코드가 훨씬 간결해짐.
+
+[case 1]
+<for문>
+List<Article> articleList = new ArrayList<>();
+for(int i = 0; i < articleFormDTO.size(); i++) {
+    ArticleFormDTO articleFormDTO = articleFormDTOs.get(i);
+    Article entity = articleFormDTO.toEntity();
+    articleList.add(article);
+}
+
+<stream>
+List<Article> articleList = articleFormDTOs.stream()
+    .map(articleFormDTO -> articleFormDTO.toEntity())
+    .collect(Collectors.toList());
+
+[case 2]
+<for문>
+for(int i = 0; i < articleList.size(); i++) {
+    Article article = articleList.get(i);
+    articleRepository.save(article);
+}
+
+<stream>
+    articleList.stream()
+        .forEach(article -> articleRepository.save(article));
