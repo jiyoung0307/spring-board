@@ -13,7 +13,7 @@ import lombok.ToString;
 @Entity
 public class Article {
     @Id   // 엔티티의 대푯값 지정
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // 자동 생성 기능 추가
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // DB가 id 자동 생성
     private Long id;
 
     @Column
