@@ -10,24 +10,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.spring.board.repository.ArticleRepository;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
 @Slf4j          // 로깅 기능을 위한 어노테이션 추가W
 @Controller
+@RequestMapping("/articles")
 public class ArticleController {
 
     @Autowired
     private ArticleRepository articleRepository;
 
     /* Create */
-    @GetMapping("/articles/new")
+    @GetMapping("/new")
     public String newArticleForm() {
         return "articles/new";
     }
 
-    @PostMapping("/articles/create")
+    @PostMapping("/create")
     public String createArticle(ArticleFormDTO articleFormDTO) {
         log.info(articleFormDTO.toString());
 
@@ -43,7 +45,7 @@ public class ArticleController {
     }
 
     /* Read */
-    @GetMapping("/articles/{id}")   // 데이터 조회 요청 접수
+    @GetMapping("/{id}")   // 데이터 조회 요청 접수
     public String show(@PathVariable Long id, Model model) {     // 매개변수로 id 받아오기
         log.info("id : " + id);    // id를 잘 받았는지 확인하는 로그 찍기
 
@@ -57,7 +59,7 @@ public class ArticleController {
         return "articles/show";
     }
 
-    @GetMapping("/articles")
+    @GetMapping("")
     public String index(Model model) {  // model 객체 받아오기
         /* 1. DB에서 모든 Article 데이터 가져오기 */
         List<Article> articleEntityList = articleRepository.findAll();
@@ -70,7 +72,7 @@ public class ArticleController {
     }
 
     /* Update */
-    @GetMapping("/articles/{id}/edit")  // URL 요청 접수
+    @GetMapping("/{id}/edit")  // URL 요청 접수
     public String edit(@PathVariable Long id, Model model) {  // id를 매개변수로 받아 오기
         // DB에서 수정할 데이터 가져오기
         Article articleEntity = articleRepository.findById(id).orElse(null);
@@ -82,7 +84,7 @@ public class ArticleController {
         return "articles/edit";
     }
 
-    @PostMapping("/articles/update")  // URL 요청 접수
+    @PostMapping("/update")  // URL 요청 접수
     public String update(ArticleFormDTO articleFormDTO) {  // 매개변수로 DTO 받아오기
         log.info(articleFormDTO.toString());
 
@@ -102,7 +104,7 @@ public class ArticleController {
         return "redirect:/articles/" + articleEntity.getId();
     }
 
-    @GetMapping("/articles/{id}/delete")  // URL 요청 접수
+    @GetMapping("/{id}/delete")  // URL 요청 접수
     public String delete(@PathVariable Long id, RedirectAttributes rttr) {  // id를 매개변수로 받아 오기
         log.info("delete 요청이 들어옴!!!");
         // 1. 삭제할 대상 가져오기
