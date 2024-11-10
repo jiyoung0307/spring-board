@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 
 @Entity // 해당 클래스가 엔티티임을 선언, 클래스 필드를 바탕으로 DB에 테이블 생성
 @Data
-@NoArgsConstructor  // 매개변수가 아예 없는 기본 생성자 자동 생성
 @AllArgsConstructor // 모든 필드를 매개변수로 갖는 생성자 자동 생성
+@NoArgsConstructor  // 매개변수가 아예 없는 기본 생성자 자동 생성
 public class Comment {
 
-    @Id
+    @Id // 대표키 지정
     @GeneratedValue(strategy = GenerationType.IDENTITY) // DB가 자동으로 1씩 증가
     private Long id;    // 대표키
 
@@ -20,7 +20,7 @@ public class Comment {
     private Article article;    // 해당 댓글의 부모 게시물
 
     @Column(name = "nickname") // 해당 필드를 테이블의 속성으로 매핑
-    private String nickName;    // 댓글을 단 사람
+    private String nickname;    // 댓글을 단 사람
 
     @Column // 해당 필드를 테이블의 속성으로 매핑
     private String body;    // 댓글 본문
