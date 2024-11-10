@@ -1,0 +1,77 @@
+package com.spring.board.repository;
+
+import com.spring.board.entity.Article;
+import com.spring.board.entity.Comment;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+@DataJpaTest    // 해당 클래스를 JPA와 연동해 테스팅
+class CommentRepositoryTest {
+    @Autowired
+    CommentRepository commentRepository;
+
+    @Test
+    @DisplayName("특정 게시글의 모든 댓글 조회")
+    void findByArticleId()
+    /* Case 1: 4번 게시글의 모든 댓글 조회 */
+    {
+        /* 1. 입력 데이터 준비 */
+        Long articleId = 4L;
+
+        /* 2. 실제 데이터 */
+        List<Comment> comments = commentRepository.findByArticleId(articleId);
+
+        /* 3. 예상 데이터 */
+        Article article = new Article(4L, "당신의 인생 영화는?", "댓글 고");   // 부모 게시글 객체 생성
+
+        /* 댓글 객체 생성 */
+        Comment a = new Comment(1L, article, "Park", "굿 윌 헌팅");
+        Comment b = new Comment(2L, article, "Kim", "아이 엠 샘");
+        Comment c = new Comment(3L, article, "Choi", "쇼생크 탈출");
+
+        /* 댓글 객체 합치기 */
+        List<Comment> expected = Arrays.asList(a, b, c);
+
+        /* 4. 비교 및 검증 */
+        assertEquals(expected.toString(), comments.toString(), "4번 글의 모든 댓글을 출력!");
+    }
+
+    /* Case 2: 1번 게시글의 모든 댓글 조회 */
+    {
+        /* 1. 입력 데이터 준비 */
+        Long articleId = 1L;
+
+        /* 2. 실제 데이터 */
+        List<Comment> comments = commentRepository.findByArticleId(articleId);
+
+        /* 3. 예상 데이터 */
+        Article article = new Article(1L, "가가가가","1111");
+        List<Comment> expected = Arrays.asList();
+
+        /* 4. 비교 및 검증 */
+        assertEquals(expected.toString(), comments.toString(), "1번 글을 댓글이 없음");
+    }
+
+    /* Case 3: 9번 게시글의 모든 댓글 조회 */
+    {
+        /* 1. 입력 데이터 준비 */
+        Long articleId = 9L;
+
+        /* 2. 실제 데이터 */
+        List<Comment> comments = commentRepository.findByArticleId(articleId);
+
+        /* 3. 예상 데이터 */
+        Article article = null;
+        List<Comment> expected = Arrays.asList();
+
+        /* 4. 비교 및 검증 */
+        assertEquals(expected.toString(), comments.toString(), "9번 글 자체가 없으므로 댓글은 비어 있어야 함");
+    }
+}

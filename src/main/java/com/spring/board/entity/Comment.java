@@ -5,10 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Entity // 해당 클래스가 엔티티임을 선언, 클래스 필드를 바탕으로 DB에 테이블 생성
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor  // 매개변수가 아예 없는 기본 생성자 자동 생성
+@AllArgsConstructor // 모든 필드를 매개변수로 갖는 생성자 자동 생성
 public class Comment {
 
     @Id
@@ -19,7 +19,7 @@ public class Comment {
     @JoinColumn(name = "article_id")    // 외래키 생성, Article 엔티티의 기본키(id)와 매핑
     private Article article;    // 해당 댓글의 부모 게시물
 
-    @Column // 해당 필드를 테이블의 속성으로 매핑
+    @Column(name = "nickname") // 해당 필드를 테이블의 속성으로 매핑
     private String nickName;    // 댓글을 단 사람
 
     @Column // 해당 필드를 테이블의 속성으로 매핑
