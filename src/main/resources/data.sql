@@ -18,7 +18,7 @@ INSERT INTO comment(article_id, nickname, body) VALUES(5, 'Kim', '샤브샤브')
 INSERT INTO comment(article_id, nickname, body) VALUES(5, 'Choi', '초밥');
 
 -- 6번 게시글의 댓글 추가
-INSERT INTO comment(article_id, nickname, body) VALUES(6, 'Park', '조깅');ㅁ
+INSERT INTO comment(article_id, nickname, body) VALUES(6, 'Park', '조깅');
 INSERT INTO comment(article_id, nickname, body) VALUES(6, 'Kim', '유튜브 시청');
 INSERT INTO comment(article_id, nickname, body) VALUES(6, 'Choi', '독서');
 
