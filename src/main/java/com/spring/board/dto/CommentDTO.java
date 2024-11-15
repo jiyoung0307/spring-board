@@ -1,4 +1,3 @@
-/*
 package com.spring.board.dto;
 
 import com.spring.board.entity.Comment;
@@ -24,4 +23,3 @@ public class CommentDTO {
         );
     }
 }
-*/
