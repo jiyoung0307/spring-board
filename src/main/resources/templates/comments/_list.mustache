@@ -3,6 +3,21 @@
         <div class="card m-2" id="comments-{{id}}">    <!-- 댓글 카드 만들고 id 부여 -->
             <div class="card-header">    <!-- 댓글 헤더 영역 설정 -->
                 {{nickname}}
+                <!-- Button trigger modal -->
+                <button type="button"
+                        class="btn btn-sm btn-outline-primary float-end"
+                        data-bs-toggle="modal"
+                        data-bs-target="#comment-edit-modal"
+                        data-bs-id="{{id}}"
+                        data-bs-nickname="{{nickname}}"
+                        data-bs-body="{{body}}"
+                        data-bs-article-id="{{articleId}}">수정
+                </button>
+                <!-- 댓글 삭제 버튼 -->
+                <button type="button"
+                        class="btn btn-sm btn-outline-danger comment-delete-btn float-end me-2"
+                        data-comment-id="{{id}}">삭제
+                </button>
             </div>
             <div class="card-body">    <!-- 댓글 본문 영역 설정 -->
                 {{body}}
