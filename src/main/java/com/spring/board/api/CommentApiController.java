@@ -14,6 +14,7 @@ import java.util.List;
 public class CommentApiController {
     @Autowired
     private CommentService commentService;
+
     /* 1. 댓글 조회 */
     @GetMapping("/articles/{articleId}/comments")   // 댓글 조회 요청 접수
     public ResponseEntity<List<CommentDTO>> comments(@PathVariable Long articleId) {
@@ -31,6 +32,7 @@ public class CommentApiController {
         /* 결과 응답 */
         return ResponseEntity.status(HttpStatus.OK).body(createdDTO);
     }
+
     /* 3. 댓글 수정 */
     @PatchMapping("/comments/{id}") // 댓글 수정 요청 접수
     public ResponseEntity<CommentDTO> update(@PathVariable Long id, @RequestBody CommentDTO commentDTO) {   // update() 생성
@@ -39,5 +41,13 @@ public class CommentApiController {
         /* 결과 응답 */
         return ResponseEntity.status(HttpStatus.OK).body(updatedDTO);
     }
+
     /* 4. 댓글 삭제 */
+    @DeleteMapping("/comments/{id}")    // 댓글 삭제 요청 접수
+    public ResponseEntity<CommentDTO> delete(@PathVariable Long id) {   // delete() 생성
+        /* 서비스에 위임 */
+        CommentDTO deletedDTO = commentService.delete(id);
+        /* 결과 응답 */
+        return ResponseEntity.status(HttpStatus.OK).body(deletedDTO);
+    }
 }
