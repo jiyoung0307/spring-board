@@ -1,7 +1,9 @@
 package com.spring.board.controller;
 
 import com.spring.board.dto.ArticleFormDTO;
+import com.spring.board.dto.CommentDTO;
 import com.spring.board.entity.Article;
+import com.spring.board.service.CommentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,13 +17,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
-@Slf4j          // 로깅 기능을 위한 어노테이션 추가W
+@Slf4j          // 로깅 기능을 위한 어노테이션 추가
 @Controller
 @RequestMapping("/articles")
 public class ArticleController {
 
     @Autowired
     private ArticleRepository articleRepository;
+    @Autowired
+    private CommentService commentService;
 
     /* Create */
     @GetMapping("/new")
@@ -51,9 +55,11 @@ public class ArticleController {
 
         /* 1. id를 조회해 데이터 가져오기 */
         Article articleEntity = articleRepository.findById(id).orElse(null);
+        List<CommentDTO> commentDTO = commentService.comments(id);
 
         /* 2. 모델에 데이터 등록하기 */
         model.addAttribute("article", articleEntity);
+        model.addAttribute("commentDTO", commentDTO);
 
         /* 3. 뷰 페이지 반환하기 */
         return "articles/show";
