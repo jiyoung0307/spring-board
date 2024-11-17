@@ -1,5 +1,6 @@
 package com.spring.board.entity;
 
+import com.spring.board.dto.CommentDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,4 +25,32 @@ public class Comment {
 
     @Column // 해당 필드를 테이블의 속성으로 매핑
     private String body;    // 댓글 본문
+
+    public static Comment createComment(CommentDTO commentDTO, Article article) {
+        /* 1. 예외 발생 */
+        if (commentDTO.getId() != null)
+            throw new IllegalArgumentException("댓글 생성 실패! 댓글의 id가 없어야 합니다.");
+
+        if (commentDTO.getArticleId() != article.getId())
+            throw new IllegalArgumentException("댓글 생성 실패! 게시글의 id가 잘못됐습니다.");
+
+        /* 2. 엔티티 생성 및 반환 */
+        return new Comment(
+                commentDTO.getId(), // 댓글 아이디
+                article,    // 부모 게시글
+                commentDTO.getNickname(),   // 댓글 닉네임
+                commentDTO.getBody()    // 댓글 본문
+        );
+    }
+
+    public void patch(CommentDTO commentDTO) {
+        /* 1. 예외 발생 */
+        if(this.id != commentDTO.getId())
+            throw  new IllegalArgumentException("댓글 수정 실패! 잘못된 id가 입력됐습니다");
+        /* 2. 객체 갱신 */
+        if(commentDTO.getNickname() != null)    // 수정할 닉네임 데이터가 있다면
+            this.nickname = commentDTO.getNickname();   // 내용 변경
+        if(commentDTO.getBody() != null)    // 수정할 본문 데이터가 있다면
+            this.body = commentDTO.getBody();   // 내용 반영
+    }
 }

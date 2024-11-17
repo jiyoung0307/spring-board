@@ -7,6 +7,11 @@ REST API 요청을 받아 응답할 떄 이 클래스에 HTTP 상태 코드, 헤
 * stream은 리스트와 같은 자료구조에 저장된 요소를 하나씩 순회하면서 처리하는 코드 패턴임.
 for문으로 작성할 때보다 코드가 훨씬 간결해짐.
 
+* stream의 특징
+- 원본 데이터를 읽기만 하고 변경하지 않는다.
+- 정렬된 결과를 컬렉션이나 배열에 담아 반환할 수 있다.
+- 내부 반복문으로, 반복문이 코드상에 노출되지 않는다.
+
 [case 1]
 <for문>
 List<Article> articleList = new ArrayList<>();
@@ -31,6 +36,31 @@ for(int i = 0; i < articleList.size(); i++) {
 <stream>
     articleList.stream()
         .forEach(article -> articleRepository.save(article));
+
+[case 3]
+public List<CommentDTO> comments(Long articleId) {
+    /* 1. 댓글 조회 */
+    List<Comment> comments = commentRepository.findByArticleId(articleId);
+
+    /* 2. 엔티티 -> DTO 변환 */
+    List<CommentDTO> commentDTO = new ArrayList<CommentDTO>();
+    for (int i = 0; i < comments.size(); i++) {     // 조회한 댓글 엔티티 수만큼 반복하기
+        Comment comment = comments.get(i);  // 조회한 댓글 엔티티 하나씩 가져오기
+        CommentDTO dto = CommentDTO.createCommentDTO(comment);  // 엔티티를 DTO로 변환
+        commentDTO.add(dto);  // 변환한 dto를 commentDTO 리스트에 삽입
+        }
+    /* 3. 결과 반환 */
+    return commentDTO;
+}
+
+<stream>
+public List<CommentDTO> comments(Long articleId) {
+    /* 결과 반환 */
+    return commentRepository.findByArticleId(articleId) // 댓글 엔티티 목록 조회
+        .stream()   // 댓글 엔티티 목록을 스트림으로 변환
+        .map(comment -> CommentDTO.createCommentDTO(comment))   // 엔티티를 DTO로 매핑
+        .collect(Collectors.toList());  // 스트림을 리스트로 변환
+}
 
 * Arrays.asList()
 입력된 배열 또는 2개 이상의 동일한 타입 데이터를 정적 리스트로 만들어 반환.
@@ -58,3 +88,5 @@ API 동작 중에 예외가 발생했을 때, 예외를 바로 사용자에게 �
 
 * 사용 목적
 @ControllerAdvice를 사용하며 컨트롤러는 컨트롤러의 역할에 집중할 수 있고, 코드의 중복 제거가 가능함.
+
+* @ResponseBody는 HTTP 요청 본문에 실린 내용(JSON, XML, YAML)을 자바 객체로 변환해줌.

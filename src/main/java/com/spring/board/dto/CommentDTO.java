@@ -5,8 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor // 모든 필드를 매개변수로 갖는 생성자 자동 생성
+@NoArgsConstructor // 매개변수가 아예 없는 기본 생성자 자동 생성
 @Data
 public class CommentDTO {
     private Long id;    // 댓글의 id

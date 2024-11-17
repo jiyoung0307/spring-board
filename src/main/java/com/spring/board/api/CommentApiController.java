@@ -5,10 +5,7 @@ import com.spring.board.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,7 +22,22 @@ public class CommentApiController {
         /* 결과 응답 */
         return ResponseEntity.status(HttpStatus.OK).body(commentDTO);
     }
+
     /* 2. 댓글 생성 */
+    @PostMapping("/articles/{articleId}/comments")  // 댓글 생성 요청 접수
+    public ResponseEntity<CommentDTO> create(@PathVariable Long articleId, @RequestBody CommentDTO commentDTO) {   // create() 생성
+        /* 서비스에 위임 */
+        CommentDTO createdDTO = commentService.create(articleId, commentDTO);
+        /* 결과 응답 */
+        return ResponseEntity.status(HttpStatus.OK).body(createdDTO);
+    }
     /* 3. 댓글 수정 */
+    @PatchMapping("/comments/{id}") // 댓글 수정 요청 접수
+    public ResponseEntity<CommentDTO> update(@PathVariable Long id, @RequestBody CommentDTO commentDTO) {   // update() 생성
+        /* 서비스에 위임 */
+        CommentDTO updatedDTO = commentService.update(id, commentDTO);
+        /* 결과 응답 */
+        return ResponseEntity.status(HttpStatus.OK).body(updatedDTO);
+    }
     /* 4. 댓글 삭제 */
 }
