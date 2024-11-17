@@ -1,6 +1,26 @@
-<div>
-    <!-- 댓글 목록 보기 -->
-    {{>comments/_list}}
-    <!-- 새 댓글 작성하기 -->
-    {{>comments/_new}}
+<div class="card m-2" id="comments-new">    <!-- class 속성 수정, id 속성 추가 -->
+    <div class="card-body">
+        <!-- 댓글 작성 폼 -->
+        <form>
+            <!-- 닉네임 입력 -->
+            <div class="mb-3">  <!-- 닉네임 입력 폼 만들기 -->
+                <label class="form-label">닉네임</label>
+                <input type="text" class="form-control" id="new-comment-nickname">
+            </div>
+
+            <!-- 댓글 본문 입력 -->
+            <div class="mb-3">  <!-- 댓글 본문 입력 폼 만들기 -->
+                <label class="form-label">댓글 내용</label>
+                <textarea type="text" class="form-control" id="new-comment-body"></textarea>
+            </div>
+
+            <!-- 히든 인풋 -->
+            {{#article}}
+                <input type="hidden" id="new-comment-article-id" value="{{id}}">
+            {{/article}}
+
+            <!-- 전송 버튼 -->
+            <button type="button" class="btn btn-primary" id="comment-create-btn">댓글 작성</button>
+        </form>
+    </div>
 </div>
