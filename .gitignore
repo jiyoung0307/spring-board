@@ -19,6 +19,7 @@ bin/
 
 ### application.properties
 **/application.properties
+src/main/java/com/spring/board/spring-board-key.pem
 
 ### initData
 src/main/java/com/spring/board/common/InitData.java
